@@ -7,21 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F4121118209724CA009D29EE /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4121117209724CA009D29EE /* BLEManager.swift */; };
+		F412111A209740C3009D29EE /* BLEDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4121119209740C3009D29EE /* BLEDevice.swift */; };
 		F4B132172097142100F94DA1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B132162097142100F94DA1 /* AppDelegate.swift */; };
-		F4B132192097142100F94DA1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B132182097142100F94DA1 /* ViewController.swift */; };
 		F4B1321C2097142100F94DA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4B1321A2097142100F94DA1 /* Main.storyboard */; };
 		F4B1321E2097142100F94DA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4B1321D2097142100F94DA1 /* Assets.xcassets */; };
 		F4B132212097142100F94DA1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4B1321F2097142100F94DA1 /* LaunchScreen.storyboard */; };
+		F4B1322920971AD800F94DA1 /* BLEDevicesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B1322820971AD800F94DA1 /* BLEDevicesTableViewController.swift */; };
+		F4B1322B20971BCE00F94DA1 /* BLEDeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B1322A20971BCE00F94DA1 /* BLEDeviceTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F4121117209724CA009D29EE /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
+		F4121119209740C3009D29EE /* BLEDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEDevice.swift; sourceTree = "<group>"; };
 		F4B132132097142100F94DA1 /* BLEScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BLEScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4B132162097142100F94DA1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F4B132182097142100F94DA1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F4B1321B2097142100F94DA1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F4B1321D2097142100F94DA1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F4B132202097142100F94DA1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F4B132222097142100F94DA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F4B1322820971AD800F94DA1 /* BLEDevicesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEDevicesTableViewController.swift; sourceTree = "<group>"; };
+		F4B1322A20971BCE00F94DA1 /* BLEDeviceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEDeviceTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +61,10 @@
 			isa = PBXGroup;
 			children = (
 				F4B132162097142100F94DA1 /* AppDelegate.swift */,
-				F4B132182097142100F94DA1 /* ViewController.swift */,
+				F4B1322820971AD800F94DA1 /* BLEDevicesTableViewController.swift */,
+				F4B1322A20971BCE00F94DA1 /* BLEDeviceTableViewCell.swift */,
+				F4121117209724CA009D29EE /* BLEManager.swift */,
+				F4121119209740C3009D29EE /* BLEDevice.swift */,
 				F4B1321A2097142100F94DA1 /* Main.storyboard */,
 				F4B1321D2097142100F94DA1 /* Assets.xcassets */,
 				F4B1321F2097142100F94DA1 /* LaunchScreen.storyboard */,
@@ -136,8 +145,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4B132192097142100F94DA1 /* ViewController.swift in Sources */,
+				F4B1322B20971BCE00F94DA1 /* BLEDeviceTableViewCell.swift in Sources */,
+				F4121118209724CA009D29EE /* BLEManager.swift in Sources */,
+				F412111A209740C3009D29EE /* BLEDevice.swift in Sources */,
 				F4B132172097142100F94DA1 /* AppDelegate.swift in Sources */,
+				F4B1322920971AD800F94DA1 /* BLEDevicesTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -211,7 +223,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -262,7 +274,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
