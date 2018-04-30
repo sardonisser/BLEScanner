@@ -80,7 +80,7 @@ class BLEDeviceDetailTableViewController: UITableViewController {
             break
         case 2:
             cell.textLabel?.text = "RSSI"
-            cell.detailTextLabel?.text = device?.rssi.stringValue
+            cell.detailTextLabel?.text = (device != nil) ? (device!.rssi.stringValue + " dBm") : nil
             break
         default:
             break
@@ -98,7 +98,7 @@ extension BLEDeviceDetailTableViewController : BLEDeviceDelegate {
     
     func bleDevice(_ device: BLEDevice, didUpdateRSSI newRSSI: NSNumber) {
         DispatchQueue.main.async {
-            self.tableView.cellForRow(at: IndexPath(row: 2, section: 0))?.detailTextLabel?.text = newRSSI.stringValue
+            self.tableView.cellForRow(at: IndexPath(row: 2, section: 0))?.detailTextLabel?.text = newRSSI.stringValue + " dBm"
         }
     }
 }
