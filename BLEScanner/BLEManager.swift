@@ -9,7 +9,7 @@
 import Foundation
 import CoreBluetooth
 
-protocol BLEManagerDelegate {
+protocol BLEManagerDelegate : class {
     func bleManager(_ manager: BLEManager, didAddDeviceAt index: Int)
 }
 
@@ -17,7 +17,7 @@ class BLEManager : NSObject {
     
     static let shared = BLEManager()
     
-    var delegate : BLEManagerDelegate?
+    weak var delegate : BLEManagerDelegate?
     var devices = [BLEDevice]()
     
     private var centralManager : CBCentralManager!
@@ -73,7 +73,7 @@ extension BLEManager : CBCentralManagerDelegate {
         } else {
             // existing device, only update rssi
             
-            print("[BLEManager] update peripheral: \(peripheral.name ?? peripheral.identifier.uuidString); RSSI: \(RSSI)")
+            //print("[BLEManager] update peripheral: \(peripheral.name ?? peripheral.identifier.uuidString); RSSI: \(RSSI)")
             
             devices[index!].rssi = RSSI
         }

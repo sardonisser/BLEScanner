@@ -9,7 +9,7 @@
 import UIKit
 import CoreBluetooth
 
-class BLEDeviceTableViewCell: UITableViewCell {
+class BLEDevicesListCell: UITableViewCell {
 
     @IBOutlet weak var labelName: UILabel!
     @IBOutlet weak var labelUUID: UILabel!
@@ -18,10 +18,10 @@ class BLEDeviceTableViewCell: UITableViewCell {
     var device : BLEDevice? {
         didSet {
             guard let device = device else { return }
-            device.delegate = self
+            device.delegateDevicesList = self
             labelName.text = device.name
             labelUUID.text = device.peripheral.identifier.uuidString
-            labelRSSI.text = device.rssi.stringValue
+            labelRSSI.text = device.rssi.stringValue + " dBm"
         }
     }
     
@@ -38,7 +38,7 @@ class BLEDeviceTableViewCell: UITableViewCell {
 
 }
 
-extension BLEDeviceTableViewCell : BLEDeviceDelegate {
+extension BLEDevicesListCell : BLEDeviceDelegate {
     func bleDevice(_ device: BLEDevice, didUpdateName newName: String?) {
         DispatchQueue.main.async {
             self.labelName.text = newName
@@ -47,7 +47,7 @@ extension BLEDeviceTableViewCell : BLEDeviceDelegate {
     
     func bleDevice(_ device: BLEDevice, didUpdateRSSI newRSSI: NSNumber) {
         DispatchQueue.main.async {
-            self.labelRSSI.text = newRSSI.stringValue
+            self.labelRSSI.text = newRSSI.stringValue + " dBm"
         }
     }
 }

@@ -9,22 +9,29 @@
 import Foundation
 import CoreBluetooth
 
-protocol BLEDeviceDelegate {
+protocol BLEDeviceDelegate : class {
     func bleDevice(_ device: BLEDevice, didUpdateName newName: String?)
     func bleDevice(_ device: BLEDevice, didUpdateRSSI newRSSI: NSNumber)
 }
 
 class BLEDevice : NSObject {
     
-    var delegate : BLEDeviceDelegate?
+    weak var delegateDevicesList : BLEDeviceDelegate?
+    weak var delegateDeviceDetail : BLEDeviceDelegate?
     
     let peripheral : CBPeripheral
     
     var name : String? {
-        didSet { delegate?.bleDevice(self, didUpdateName: name) }
+        didSet {
+            delegateDevicesList?.bleDevice(self, didUpdateName: name)
+            delegateDeviceDetail?.bleDevice(self, didUpdateName: name)
+        }
     }
     var rssi : NSNumber {
-        didSet { delegate?.bleDevice(self, didUpdateRSSI: rssi) }
+        didSet {
+            delegateDevicesList?.bleDevice(self, didUpdateRSSI: rssi)
+            delegateDeviceDetail?.bleDevice(self, didUpdateRSSI: rssi)
+        }
     }
     
     init(peripheral: CBPeripheral, rssi: NSNumber) {

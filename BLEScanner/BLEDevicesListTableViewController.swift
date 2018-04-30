@@ -9,7 +9,7 @@
 import UIKit
 import CoreBluetooth
 
-class BLEDevicesTableViewController: UITableViewController {
+class BLEDevicesListTableViewController: UITableViewController {
     
     private var activityIndicator : UIActivityIndicatorView!
     private var barButtonStartRefresh : UIBarButtonItem!
@@ -20,11 +20,10 @@ class BLEDevicesTableViewController: UITableViewController {
         
         activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         activityIndicator.hidesWhenStopped = true
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: activityIndicator)
         
         self.barButtonStartRefresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshPressed))
         self.barButtonStopRefresh = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(refreshPressed))
-        self.navigationItem.rightBarButtonItem = barButtonStartRefresh
+        self.navigationItem.rightBarButtonItems = [barButtonStartRefresh, UIBarButtonItem(customView: activityIndicator)]
         
         BLEManager.shared.delegate = self
     }
@@ -40,11 +39,22 @@ class BLEDevicesTableViewController: UITableViewController {
         if BLEManager.shared.scanning {
             BLEManager.shared.stopScan()
             activityIndicator.stopAnimating()
-            self.navigationItem.rightBarButtonItem = barButtonStartRefresh
+            self.navigationItem.rightBarButtonItems![0] = barButtonStartRefresh
         } else {
             BLEManager.shared.startScan(services: nil, options: [CBCentralManagerScanOptionAllowDuplicatesKey:true])
             activityIndicator.startAnimating()
-            self.navigationItem.rightBarButtonItem = barButtonStopRefresh
+            self.navigationItem.rightBarButtonItems![0] = barButtonStopRefresh
+        }
+    }
+    
+    
+    // MARK: - Navigation
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowDeviceDetail" {
+            let detailVC = segue.destination as! BLEDeviceDetailTableViewController
+            let selectedRow = self.tableView.indexPathForSelectedRow!.row
+            detailVC.device = BLEManager.shared.devices[selectedRow]
         }
     }
     
@@ -59,9 +69,8 @@ class BLEDevicesTableViewController: UITableViewController {
         return BLEManager.shared.devices.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "DeviceCell", for: indexPath) as! BLEDeviceTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DeviceCell", for: indexPath) as! BLEDevicesListCell
 
         let device = BLEManager.shared.devices[indexPath.row]
         cell.device = device
@@ -71,7 +80,7 @@ class BLEDevicesTableViewController: UITableViewController {
 
 }
 
-extension BLEDevicesTableViewController : BLEManagerDelegate {
+extension BLEDevicesListTableViewController : BLEManagerDelegate {
     func bleManager(_ manager: BLEManager, didAddDeviceAt index: Int) {
         DispatchQueue.main.async {
             self.tableView.beginUpdates()

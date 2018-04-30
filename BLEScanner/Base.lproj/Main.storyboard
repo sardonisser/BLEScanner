@@ -12,7 +12,7 @@
         <!--BLE Devices-->
         <scene sceneID="she-SM-s4e">
             <objects>
-                <tableViewController title="BLE Devices" id="bLu-7D-GGQ" customClass="BLEDevicesTableViewController" customModule="BLEScanner" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="BLE Devices" id="bLu-7D-GGQ" customClass="BLEDevicesListTableViewController" customModule="BLEScanner" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="58" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="rKR-6k-Iae">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -23,7 +23,7 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="DeviceCell" id="wiA-Ja-4i1" customClass="BLEDeviceTableViewCell" customModule="BLEScanner" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="DeviceCell" id="wiA-Ja-4i1" customClass="BLEDevicesListCell" customModule="BLEScanner" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="58"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wiA-Ja-4i1" id="YTV-Ni-K3V">
@@ -74,6 +74,7 @@
                                     <outlet property="labelName" destination="OPu-XE-JLB" id="vbh-NU-umz"/>
                                     <outlet property="labelRSSI" destination="jAu-Lk-iyl" id="7eJ-cf-CKt"/>
                                     <outlet property="labelUUID" destination="1pK-A3-9jQ" id="bpc-EL-pcS"/>
+                                    <segue destination="ljR-6v-55J" kind="show" identifier="ShowDeviceDetail" id="KwQ-ev-Wmq"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -87,6 +88,57 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CEE-kP-tkX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="434" y="100"/>
+        </scene>
+        <!--Device Detail Table View Controller-->
+        <scene sceneID="XwL-sf-ghx">
+            <objects>
+                <tableViewController id="ljR-6v-55J" customClass="BLEDeviceDetailTableViewController" customModule="BLEScanner" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="heg-MO-Xmg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DeviceInfoCell" textLabel="Wc6-DS-Rad" detailTextLabel="TFq-l4-xmB" style="IBUITableViewCellStyleValue2" id="R0E-Nj-Tz3" customClass="BLEDeviceDetailInfoCell" customModule="BLEScanner" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="R0E-Nj-Tz3" id="V3b-zV-UIa">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wc6-DS-Rad">
+                                            <rect key="frame" x="-4" y="14" width="91" height="16"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="TFq-l4-xmB">
+                                            <rect key="frame" x="93" y="14" width="35" height="16"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="labelSeparatorOffset">
+                                        <real key="value" value="-20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="ljR-6v-55J" id="hA7-1b-Tkk"/>
+                            <outlet property="delegate" destination="ljR-6v-55J" id="P1L-T5-kO8"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="2Ul-6F-ffm"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VPI-b5-4Ke" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1388" y="99"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="0Ff-Az-4TP">
