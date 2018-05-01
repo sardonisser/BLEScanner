@@ -9,21 +9,21 @@
 import Foundation
 import CoreBluetooth
 
-protocol BLEManagerDelegate : class {
+protocol BLEManagerDelegate: class {
     func bleManager(_ manager: BLEManager, didAddDeviceAt index: Int)
 }
 
-class BLEManager : NSObject {
+class BLEManager: NSObject {
     
     static let shared = BLEManager()
     
-    weak var delegate : BLEManagerDelegate?
+    weak var delegate: BLEManagerDelegate?
     var devices = [BLEDevice]()
     
-    private var centralManager : CBCentralManager!
+    private var centralManager: CBCentralManager!
     private var bleReady = false
     private(set) var scanning = false
-    private var timer : Timer?
+    private var timer: Timer?
     
     private override init() {
         super.init()
@@ -57,25 +57,25 @@ class BLEManager : NSObject {
     
 }
 
-extension BLEManager : CBCentralManagerDelegate {
+extension BLEManager: CBCentralManagerDelegate {
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        var index = devices.index(where: {$0.peripheral == peripheral})
-        if index == nil {
-            // new device, instantiate and add to table view
-            
+        var device = devices.first(where: { $0.peripheral === peripheral })
+        let isNewDevice = device == nil
+        
+        if isNewDevice {
+            // new device, instantiate and add to devices list
             print("[BLEManager] new peripheral: \(peripheral)")
             print(advertisementData)
             
-            let newDevice = BLEDevice(peripheral: peripheral, rssi: RSSI)
-            self.devices.append(newDevice)
-            index = self.devices.count-1
-            delegate?.bleManager(self, didAddDeviceAt: index!)
-        } else {
-            // existing device, only update rssi
-            
-            //print("[BLEManager] update peripheral: \(peripheral.name ?? peripheral.identifier.uuidString); RSSI: \(RSSI)")
-            
-            devices[index!].rssi = RSSI
+            device = BLEDevice(peripheral: peripheral)
+            self.devices.append(device!)
+        }
+        
+        device!.rssi = RSSI
+        device!.dateTime = Date()
+        
+        if isNewDevice {
+            delegate?.bleManager(self, didAddDeviceAt: self.devices.count-1)
         }
     }
     

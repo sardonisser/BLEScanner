@@ -9,42 +9,48 @@
 import Foundation
 import CoreBluetooth
 
-protocol BLEDeviceDelegate : class {
+protocol BLEDeviceDelegate: class {
     func bleDevice(_ device: BLEDevice, didUpdateName newName: String?)
     func bleDevice(_ device: BLEDevice, didUpdateRSSI newRSSI: NSNumber)
+    func bleDevice(_ device: BLEDevice, didUpdateDateTime newDateTime: Date)
 }
 
-class BLEDevice : NSObject {
+class BLEDevice: NSObject {
     
-    weak var delegateDevicesList : BLEDeviceDelegate?
-    weak var delegateDeviceDetail : BLEDeviceDelegate?
+    weak var delegateDevicesList: BLEDeviceDelegate?
+    weak var delegateDeviceDetail: BLEDeviceDelegate?
     
-    let peripheral : CBPeripheral
+    let peripheral: CBPeripheral
     
-    var name : String? {
+    var name: String? {
         didSet {
             delegateDevicesList?.bleDevice(self, didUpdateName: name)
             delegateDeviceDetail?.bleDevice(self, didUpdateName: name)
         }
     }
-    var rssi : NSNumber {
+    var rssi: NSNumber! {
         didSet {
             delegateDevicesList?.bleDevice(self, didUpdateRSSI: rssi)
             delegateDeviceDetail?.bleDevice(self, didUpdateRSSI: rssi)
         }
     }
+    var dateTime: Date! {
+        didSet {
+            delegateDevicesList?.bleDevice(self, didUpdateDateTime: dateTime)
+            delegateDeviceDetail?.bleDevice(self, didUpdateDateTime: dateTime)
+        }
+    }
     
-    init(peripheral: CBPeripheral, rssi: NSNumber) {
+    init(peripheral: CBPeripheral) {
         self.peripheral = peripheral
         self.name = peripheral.name
-        self.rssi = rssi
         super.init()
         peripheral.delegate = self
     }
     
 }
 
-extension BLEDevice : CBPeripheralDelegate {
+extension BLEDevice: CBPeripheralDelegate {
     
     func peripheralDidUpdateName(_ peripheral: CBPeripheral) {
         self.name = peripheral.name

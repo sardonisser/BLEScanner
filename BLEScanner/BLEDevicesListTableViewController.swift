@@ -11,13 +11,16 @@ import CoreBluetooth
 
 class BLEDevicesListTableViewController: UITableViewController {
     
-    private var activityIndicator : UIActivityIndicatorView!
-    private var barButtonStartRefresh : UIBarButtonItem!
-    private var barButtonStopRefresh : UIBarButtonItem!
+    @IBOutlet var backgroundViewNoDevices: UIView!
+    
+    private var activityIndicator: UIActivityIndicatorView!
+    private var barButtonStartRefresh: UIBarButtonItem!
+    private var barButtonStopRefresh: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // UI: Navigation Bar Items
         activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         activityIndicator.hidesWhenStopped = true
         
@@ -25,6 +28,10 @@ class BLEDevicesListTableViewController: UITableViewController {
         self.barButtonStopRefresh = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(refreshPressed))
         self.navigationItem.rightBarButtonItems = [barButtonStartRefresh, UIBarButtonItem(customView: activityIndicator)]
         
+        // UI: Background View
+        self.tableView.backgroundView = backgroundViewNoDevices
+        
+        // Data: Delegates
         BLEManager.shared.delegate = self
     }
 
@@ -80,9 +87,13 @@ class BLEDevicesListTableViewController: UITableViewController {
 
 }
 
-extension BLEDevicesListTableViewController : BLEManagerDelegate {
+extension BLEDevicesListTableViewController: BLEManagerDelegate {
     func bleManager(_ manager: BLEManager, didAddDeviceAt index: Int) {
         DispatchQueue.main.async {
+            if let backgroundView = self.tableView.backgroundView, !backgroundView.isHidden {
+                backgroundView.isHidden = true
+            }
+            
             self.tableView.beginUpdates()
             self.tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
             self.tableView.endUpdates()

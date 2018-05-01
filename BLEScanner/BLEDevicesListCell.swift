@@ -14,40 +14,38 @@ class BLEDevicesListCell: UITableViewCell {
     @IBOutlet weak var labelName: UILabel!
     @IBOutlet weak var labelUUID: UILabel!
     @IBOutlet weak var labelRSSI: UILabel!
+    @IBOutlet weak var labelDateTime: UILabel!
     
-    var device : BLEDevice? {
+    var device: BLEDevice? {
         didSet {
             guard let device = device else { return }
             device.delegateDevicesList = self
-            labelName.text = device.name
-            labelUUID.text = device.peripheral.identifier.uuidString
-            labelRSSI.text = device.rssi.stringValue + " dBm"
+            
+            self.labelUUID.text = BLEUIFormatter.formatDeviceUUID(device.uuid) // value won't change, no need for delegate method
+            self.bleDevice(device, didUpdateName: device.name)
+            self.bleDevice(device, didUpdateRSSI: device.rssi)
+            self.bleDevice(device, didUpdateDateTime: device.dateTime)
         }
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
 }
 
-extension BLEDevicesListCell : BLEDeviceDelegate {
+extension BLEDevicesListCell: BLEDeviceDelegate {
     func bleDevice(_ device: BLEDevice, didUpdateName newName: String?) {
         DispatchQueue.main.async {
-            self.labelName.text = newName
+            self.labelName.text = BLEUIFormatter.formatDeviceName(newName)
         }
     }
     
     func bleDevice(_ device: BLEDevice, didUpdateRSSI newRSSI: NSNumber) {
         DispatchQueue.main.async {
-            self.labelRSSI.text = newRSSI.stringValue + " dBm"
+            self.labelRSSI.text = BLEUIFormatter.formatDeviceRSSI(newRSSI)
+        }
+    }
+    
+    func bleDevice(_ device: BLEDevice, didUpdateDateTime newDateTime: Date) {
+        DispatchQueue.main.async {
+            self.labelDateTime.text = BLEUIFormatter.formatDeviceDateTime(newDateTime)
         }
     }
 }

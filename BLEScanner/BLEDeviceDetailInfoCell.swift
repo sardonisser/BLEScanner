@@ -12,7 +12,7 @@ import UIKit
 class BLEDeviceDetailInfoCell: UITableViewCell {
     
     @IBInspectable
-    var labelSeparatorOffset : CGFloat = -20
+    var labelSeparatorOffset: CGFloat = -20
     
     override func layoutSubviews() {
         super.layoutSubviews()

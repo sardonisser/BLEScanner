@@ -10,10 +10,16 @@ import UIKit
 
 class BLEDeviceDetailTableViewController: UITableViewController {
     
-    var device : BLEDevice? {
+    var device: BLEDevice? {
         didSet {
             guard let device = device else { return }
             device.delegateDeviceDetail = self
+            
+            self.tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.detailTextLabel?.text =
+                BLEUIFormatter.formatDeviceUUID(device.uuid)
+            self.bleDevice(device, didUpdateName: device.name)
+            self.bleDevice(device, didUpdateRSSI: device.rssi)
+            self.bleDevice(device, didUpdateDateTime: device.dateTime)
         }
     }
     
@@ -47,19 +53,21 @@ class BLEDeviceDetailTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch(section) {
         case 0:
-            return 3
+            return 4
         default:
             fatalError("requested section is out of range")
         }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell : UITableViewCell
+        let cell: UITableViewCell
 
         switch(indexPath.section) {
         case 0:
             cell = tableView.dequeueReusableCell(withIdentifier: "DeviceInfoCell")!
-            populateDeviceInfoCell(cell, at: indexPath.row)
+            if device != nil {
+                populateDeviceInfoCell(cell, atRow: indexPath.row)
+            }
             break;
         default:
             fatalError("requested section is out of range")
@@ -68,19 +76,23 @@ class BLEDeviceDetailTableViewController: UITableViewController {
         return cell
     }
     
-    private func populateDeviceInfoCell(_ cell: UITableViewCell, at row: Int) {
+    private func populateDeviceInfoCell(_ cell: UITableViewCell, atRow row: Int) {
         switch(row) {
         case 0:
             cell.textLabel?.text = "Name"
-            cell.detailTextLabel?.text = device?.name
+            cell.detailTextLabel?.text = (device != nil) ? BLEUIFormatter.formatDeviceName(device!.name) : nil
             break
         case 1:
             cell.textLabel?.text = "UUID"
-            cell.detailTextLabel?.text = device?.peripheral.identifier.uuidString
+            cell.detailTextLabel?.text = (device != nil) ? BLEUIFormatter.formatDeviceUUID(device!.uuid) : nil
             break
         case 2:
             cell.textLabel?.text = "RSSI"
-            cell.detailTextLabel?.text = (device != nil) ? (device!.rssi.stringValue + " dBm") : nil
+            cell.detailTextLabel?.text = (device != nil) ? BLEUIFormatter.formatDeviceRSSI(device!.rssi) : nil
+            break
+        case 3:
+            cell.textLabel?.text = "Time"
+            cell.detailTextLabel?.text = (device != nil) ? BLEUIFormatter.formatDeviceDateTime(device!.dateTime) : nil
             break
         default:
             break
@@ -89,16 +101,25 @@ class BLEDeviceDetailTableViewController: UITableViewController {
 
 }
 
-extension BLEDeviceDetailTableViewController : BLEDeviceDelegate {
+extension BLEDeviceDetailTableViewController: BLEDeviceDelegate {
     func bleDevice(_ device: BLEDevice, didUpdateName newName: String?) {
         DispatchQueue.main.async {
-            self.tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.detailTextLabel?.text = newName
+            guard let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) else { return }
+            self.populateDeviceInfoCell(cell, atRow: 0)
         }
     }
     
     func bleDevice(_ device: BLEDevice, didUpdateRSSI newRSSI: NSNumber) {
         DispatchQueue.main.async {
-            self.tableView.cellForRow(at: IndexPath(row: 2, section: 0))?.detailTextLabel?.text = newRSSI.stringValue + " dBm"
+            guard let cell = self.tableView.cellForRow(at: IndexPath(row: 2, section: 0)) else { return }
+            self.populateDeviceInfoCell(cell, atRow: 2)
+        }
+    }
+    
+    func bleDevice(_ device: BLEDevice, didUpdateDateTime newDateTime: Date) {
+        DispatchQueue.main.async {
+            guard let cell = self.tableView.cellForRow(at: IndexPath(row: 3, section: 0)) else { return }
+            self.populateDeviceInfoCell(cell, atRow: 3)
         }
     }
 }

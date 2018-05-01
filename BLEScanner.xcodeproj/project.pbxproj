@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		F4121118209724CA009D29EE /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4121117209724CA009D29EE /* BLEManager.swift */; };
 		F412111A209740C3009D29EE /* BLEDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4121119209740C3009D29EE /* BLEDevice.swift */; };
+		F418CD1C2098925900B38470 /* BLEUIFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F418CD1B2098925900B38470 /* BLEUIFormatter.swift */; };
+		F418CD1E209895C800B38470 /* BLEDevice+UUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = F418CD1D209895C800B38470 /* BLEDevice+UUID.swift */; };
 		F4A7BD272097857800379D41 /* BLEDeviceDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A7BD262097857800379D41 /* BLEDeviceDetailTableViewController.swift */; };
 		F4A7BD292097927100379D41 /* BLEDeviceDetailInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A7BD282097927100379D41 /* BLEDeviceDetailInfoCell.swift */; };
 		F4B132172097142100F94DA1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B132162097142100F94DA1 /* AppDelegate.swift */; };
@@ -22,6 +24,8 @@
 /* Begin PBXFileReference section */
 		F4121117209724CA009D29EE /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
 		F4121119209740C3009D29EE /* BLEDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEDevice.swift; sourceTree = "<group>"; };
+		F418CD1B2098925900B38470 /* BLEUIFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEUIFormatter.swift; sourceTree = "<group>"; };
+		F418CD1D209895C800B38470 /* BLEDevice+UUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BLEDevice+UUID.swift"; sourceTree = "<group>"; };
 		F4A7BD262097857800379D41 /* BLEDeviceDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEDeviceDetailTableViewController.swift; sourceTree = "<group>"; };
 		F4A7BD282097927100379D41 /* BLEDeviceDetailInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEDeviceDetailInfoCell.swift; sourceTree = "<group>"; };
 		F4B132132097142100F94DA1 /* BLEScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BLEScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,8 +69,10 @@
 			isa = PBXGroup;
 			children = (
 				F4B132162097142100F94DA1 /* AppDelegate.swift */,
+				F418CD1B2098925900B38470 /* BLEUIFormatter.swift */,
 				F4121117209724CA009D29EE /* BLEManager.swift */,
 				F4121119209740C3009D29EE /* BLEDevice.swift */,
+				F418CD1D209895C800B38470 /* BLEDevice+UUID.swift */,
 				F4B1322820971AD800F94DA1 /* BLEDevicesListTableViewController.swift */,
 				F4B1322A20971BCE00F94DA1 /* BLEDevicesListCell.swift */,
 				F4A7BD262097857800379D41 /* BLEDeviceDetailTableViewController.swift */,
@@ -155,6 +161,8 @@
 				F4B1322B20971BCE00F94DA1 /* BLEDevicesListCell.swift in Sources */,
 				F4121118209724CA009D29EE /* BLEManager.swift in Sources */,
 				F4A7BD272097857800379D41 /* BLEDeviceDetailTableViewController.swift in Sources */,
+				F418CD1E209895C800B38470 /* BLEDevice+UUID.swift in Sources */,
+				F418CD1C2098925900B38470 /* BLEUIFormatter.swift in Sources */,
 				F412111A209740C3009D29EE /* BLEDevice.swift in Sources */,
 				F4B132172097142100F94DA1 /* AppDelegate.swift in Sources */,
 				F4B1322920971AD800F94DA1 /* BLEDevicesListTableViewController.swift in Sources */,
